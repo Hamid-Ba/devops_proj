@@ -30,6 +30,8 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "drf_yasg",
     "corsheaders",
+    "django_celery_beat",
+    "djcelery_email",
 ]
 
 LOCAL_APPS = ["core_apps.users", "core_apps.profiles", "core_apps.common"]
@@ -135,6 +137,10 @@ AUTH_USER_MODEL = "users.User"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_URLS_REGEX = r"^/api/.*$"
+
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+CELERY_TIMEZONE = "Asia/Tehran"
 
 LOGGING = {
     "version": 1,

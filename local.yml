@@ -19,8 +19,70 @@ services:
     depends_on:
       - postgres
       - mailhog
+      - redis
     networks:
       - devops_proj
+
+  redis:
+    image: redis:6-alpine
+    container_name: redis
+    networks:
+      - devops_proj
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/DockerFile
+    command: /start_worker
+    container_name: worker
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    depends_on:
+      - postgres
+      - mailhog
+      - redis
+    networks:
+      - devops_proj
+
+  beatworker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/DockerFile
+    command: /start_beat
+    container_name: beat
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - devops_proj
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/DockerFile
+    command: /start_flower
+    container_name: flower
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "5555:5555"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - devops_proj
+
 
   postgres:
     image: postgres:13-alpine
