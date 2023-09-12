@@ -35,7 +35,7 @@ black-diff:
 	docker compose -f local.yml exec api black --diff --exclude=migrations .
 
 black:
-	docker compose -f local.yml exec api black --exclude=migrations .
+	docker compose -f local.yml exec api black --exclude=venv .
 
 isort-check:
 	docker compose -f local.yml exec api isort . --check-only --skip .venv --skip migrations
@@ -48,3 +48,6 @@ isort:
 
 devops-db:
 	docker compose -f local.yml exec postgres psql --username=postgres --dbname=Devops
+
+test:
+	docker compose -f local.yml run --rm api python manage.py test
