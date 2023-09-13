@@ -10,17 +10,17 @@ from .models import User
 
 
 class UserAdmin(BaseAdminModel):
-    list_display = ["fullName", "phone", "is_active", "last_login"]
+    list_display = ["fullName", "phone", "email", "is_active", "last_login"]
     list_editable = ["is_active"]
     readonly_fields = ["last_login"]
     list_display_links = ["fullName", "phone"]
     ordering = ["id"]
 
     list_filter = ["is_active", "is_staff"]
-    search_fields = ["phone"]
+    search_fields = ["phone", "email"]
 
     fieldsets = (
-        ("General Info", {"fields": ("fullName", "phone", "password")}),
+        ("General Info", {"fields": ("fullName", "phone", "email", "password")}),
         (
             "Permissions",
             {

@@ -5,6 +5,8 @@ Account Module Serializers
 from datetime import datetime
 from rest_framework import serializers
 from random import randint
+from djoser.serializers import UserCreateSerializer
+from django_countries.serializer_fields import CountryField
 
 from django.conf import settings
 from django.contrib.auth import get_user_model, authenticate
@@ -108,3 +110,16 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+
+class DjoserUserSerializer(UserSerializer):
+    username = serializers.CharField(source="profile.username")
+    country = CountryField(source="profile.country")
+    gender = serializers.CharField(source="profile.gender")
+    
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ["username", "country", "gender"]
+        
+class CreateDjoserUserSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = get_user_model()
+        fields = ["id", "email", "phone", "password"]
