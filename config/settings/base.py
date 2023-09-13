@@ -142,6 +142,11 @@ CELERY_BROKER_URL = env("CELERY_BROKER")
 CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
 CELERY_TIMEZONE = "Asia/Tehran"
 
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "core_apps.common.exceptions.common_exception_handler",
+    "NONE_FIELD_ERRORS_KEY": "error",
+}
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
