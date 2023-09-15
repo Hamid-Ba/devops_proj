@@ -122,4 +122,5 @@ class DjoserUserSerializer(UserSerializer):
 class CreateDjoserUserSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = get_user_model()
-        fields = ["id", "email", "phone", "password"]
+        fields = ["id", "phone", "password"]
+        read_only_fields = ["id"]

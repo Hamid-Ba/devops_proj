@@ -23,12 +23,12 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "drf_spectacular",
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
     "django_countries",
     "phonenumber_field",
-    "drf_yasg",
     "corsheaders",
     "django_celery_beat",
     "djcelery_email",
@@ -147,11 +147,17 @@ CELERY_TIMEZONE = "Asia/Tehran"
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "core_apps.common.exceptions.common_exception_handler",
     "NONE_FIELD_ERRORS_KEY": "error",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES":(
-        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
+
+SPECTACULAR_SETTINGS = {
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
 
 from datetime import timedelta
 

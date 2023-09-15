@@ -2,6 +2,7 @@
 Account Module Views
 """
 from rest_framework import generics, permissions, authentication, views
+from rest_framework_simplejwt import authentication as jwt_auth
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import logout
 
@@ -46,7 +47,7 @@ class LogoutView(views.APIView):
     """Logout View"""
 
     permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.TokenAuthentication, jwt_auth.JWTAuthentication]
 
     def get(self, request):
         """Logout Action"""
@@ -67,7 +68,7 @@ class AuthTokenView(ObtainAuthToken):
 class UserView(generics.RetrieveUpdateAPIView):
     """Retrieve Or Update APIView for User"""
 
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.TokenAuthentication, jwt_auth.JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 
