@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Setup Docker Compose
+      run: make up
     - name: Take Test From Django App
       run: make test
